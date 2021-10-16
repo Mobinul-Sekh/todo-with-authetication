@@ -161,7 +161,7 @@ app.get("/:customListTitle", function (req, res) {
 
 let port = process.env.PORT;
 if (port == null || port == "") {
-  port = 3000;
+  port = 3500;
 }
 app.listen(port);
 
