@@ -165,6 +165,6 @@ if (port == null || port == "") {
 }
 app.listen(port);
 
-app.listen(3500, function () {
+app.listen(port, function () {
     console.log("server is running on heroku..");
 })
