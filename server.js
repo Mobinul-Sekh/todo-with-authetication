@@ -27,5 +27,5 @@ if (port == null || port == "") {
 }
 
 app.listen(port, function () {
-    console.log("server is running on heroku..");
+    console.log(`server is running on http://localhost:${port}/`);
 })
