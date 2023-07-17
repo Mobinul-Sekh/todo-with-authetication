@@ -1,0 +1,16 @@
+<%- include("header", {page: 'auth'}) -%>
+
+<h1>Signup/Login</h1 >
+<form class="text-certer container form-group" action="/create-user" method="post">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input type="email" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Enter Your Email">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Your Password">
+    </div>
+    <button type="submit" class="btn">Submit</button>
+</form>
+
+<%- include("footer") -%>
