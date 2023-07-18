@@ -1,9 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const swaggerUi = require('swagger-ui-express');
+
 require("dotenv").config();
 const todoRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
+const swaggerDocument = require('./swagger/swagger.json');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -18,6 +21,7 @@ connection.once("open", () => {
 })
 
 // routes
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', todoRouter);
 app.use('/', authRouter)
 
