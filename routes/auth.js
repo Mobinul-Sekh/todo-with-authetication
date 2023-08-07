@@ -57,15 +57,15 @@ router.post("/signin-user", (req, res) => {
             }
             else{
                 // Generating JWT token
-                const token = jwt.sign({ id: foundUser._id, username: foundUser.name, useremail: foundUser.email}, process.env.JWT_SECRET, {
+                const token = jwt.sign({ id: foundUser._id, useremail: foundUser.email}, process.env.JWT_SECRET, {
                     expiresIn: '1h', // expiration time
                 })
-
-                res.set("Authorization", `Bearer ${token}`);
+                
+                res.status(201).json({token})
             }
         }
         if(err){
-            console.log("Sing-in err --> ");
+            console.log("Sign-in err --> ");
         }
     })
 })

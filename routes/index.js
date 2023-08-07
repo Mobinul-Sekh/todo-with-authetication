@@ -17,16 +17,16 @@ router.get("/read-all", authenticateToken, function (req, res) {
                     console.log("default items successfully inserted!");
                 }
             });
-            res.redirect("/read-all");
+            // res.redirect("/read-all");
         }
         else {
             res.render("list", { listTitle: "Today", newItems: foundItems});
         }
     });
-
+    // res.json({ message: 'This is a protected route', user: req.user });
 });
 
-router.post("/add-todo", authenticateToken, function (req, res) {
+router.post("/add-todo", function (req, res) {
 
     const itemName = req.body.item;
     const listName = req.body.listName;
@@ -52,7 +52,7 @@ router.post("/add-todo", authenticateToken, function (req, res) {
       
 });
 
-router.post("/delete-todo", authenticateToken, function (req, res){
+router.post("/delete-todo", function (req, res){
 
     const checkedItem = req.body.checkbox;
     const listName = req.body.listName;
@@ -74,7 +74,7 @@ router.post("/delete-todo", authenticateToken, function (req, res){
     
 });
 
-router.get("/new/:customListTitle", authenticateToken, function (req, res) {
+router.get("/new/:customListTitle", function (req, res) {
 
     customListTitle = _.capitalize(req.params.customListTitle);
 
