@@ -21,23 +21,28 @@ router.get("/signout", (req, res) => {
 
 router.post("/create-user", (req, res) => {
 
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
 
-    User.findOne({email: email}, (err, foundUser) => {
-        if(!foundUser){
-            const newUser = new User({
-                name: name,
-                email: email,
-                password: password
-            })
-
-            newUser.save()
-            res.redirect('/signin')
-        }
-        else{
-            res.render("error", { errorMsg: "User Already Exists please Sign in!", errorCode: 409, redirectPage: '/signin'});
-        }
-    })
+    if ( password !== confirmPassword ) {
+        res.render("error", { errorMsg: "Password and Confirm Password do not match!", errorCode: 409, redirectPage: '/signup'});
+    }
+    else {
+        User.findOne({email: email}, (err, foundUser) => {
+            if(!foundUser){
+                const newUser = new User({
+                    name: name,
+                    email: email,
+                    password: password
+                })
+    
+                newUser.save()
+                res.redirect('/signin')
+            }
+            else{
+                res.render("error", { errorMsg: "User Already Exists please Sign in!", errorCode: 409, redirectPage: '/signin'});
+            }
+        })
+    }
 })
 
 router.post("/signin-user", (req, res) => {

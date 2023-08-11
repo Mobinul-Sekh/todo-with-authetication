@@ -82,7 +82,6 @@ router.post("/delete-todo", authenticateToken, function (req, res){
 router.get("/new/:customListTitle", authenticateToken, function (req, res) {
 
     customListTitle = _.capitalize(req.params.customListTitle);
-    console.log(req.user.id);
 
     List.findOne({ name: customListTitle, user: req.user.id }, function(err, foundList){
         if(err){
