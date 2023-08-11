@@ -7,38 +7,44 @@ const authenticateToken = require('../middlewares/jwt-middleware')
 
 router.get("/read-all", authenticateToken, function (req, res) {
     
-    Item.find({}, function (err, foundItems) {
-        if (foundItems.length === 0) {
-
-            Item.insertMany(defaultItems, function (err) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("default items successfully inserted!");
-                }
-            });
-            res.redirect("/read-all");
+    Item.find({ user: req.user.id }, function (err, foundItems) {
+        if (err) {
+            console.log("Error while get todos for the user -> ", err);
         }
         else {
-            res.render("list", { listTitle: "Today", newItems: foundItems});
+            if (foundItems.length === 0) {
+                defaultItems.forEach(async element => {
+                    const newItem = new Item({
+                        name: element,
+                        user: req.user.id
+                    });
+                    await newItem.save()
+                });
+                res.redirect("/read-all");
+            }
+            else {
+                res.render("list", { listTitle: "Today", newItems: foundItems});
+            }
         }
     });
 });
 
-router.post("/add-todo", function (req, res) {
+router.post("/add-todo", authenticateToken, function (req, res) {
 
     const itemName = req.body.item;
     const listName = req.body.listName;
+    const userId = req.user.id;
 
     const newItem = new Item({
-        name: itemName
+        name: itemName,
+        user: userId
     });
 
     if( listName === "Today"){
         newItem.save();
         res.redirect("/read-all");
     }else{
-        List.findOne({name: listName}, function(err, foundList){
+        List.findOne({ name: listName, user: req.user.id }, function(err, foundList){
             if(err){
                 console.log("Error while deleting list is -> " + err);
             }else{
@@ -51,7 +57,7 @@ router.post("/add-todo", function (req, res) {
       
 });
 
-router.post("/delete-todo", function (req, res){
+router.post("/delete-todo", authenticateToken, function (req, res){
 
     const checkedItem = req.body.checkbox;
     const listName = req.body.listName;
@@ -62,7 +68,7 @@ router.post("/delete-todo", function (req, res){
                 res.redirect("/read-all");
         });
     }else{
-        List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedItem}}}, function( err, foundCustomList){
+        List.findOneAndUpdate({ name: listName, user: req.user.id }, {$pull: {items: {_id: checkedItem}}}, function( err, foundCustomList){
             if(err){
                 console.log("Error while deleting custom list is -> " + err);
             }else{
@@ -73,11 +79,12 @@ router.post("/delete-todo", function (req, res){
     
 });
 
-router.get("/new/:customListTitle", function (req, res) {
+router.get("/new/:customListTitle", authenticateToken, function (req, res) {
 
     customListTitle = _.capitalize(req.params.customListTitle);
+    console.log(req.user.id);
 
-    List.findOne({name: customListTitle}, function(err, foundList){
+    List.findOne({ name: customListTitle, user: req.user.id }, function(err, foundList){
         if(err){
             console.log("The error is -> " + err);
         }else{
@@ -87,6 +94,7 @@ router.get("/new/:customListTitle", function (req, res) {
 
                 const customList = new List({
                     name: customListTitle,
+                    user: req.user.id,
                     items: []
                 });
 

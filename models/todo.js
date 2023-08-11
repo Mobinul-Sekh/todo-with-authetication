@@ -5,6 +5,10 @@ const itemsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -19,7 +23,15 @@ const listSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    items: [itemsSchema]
+    items: [itemsSchema],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 const List = mongoose.model("List", listSchema);

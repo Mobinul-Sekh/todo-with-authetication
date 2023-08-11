@@ -58,7 +58,9 @@ router.post("/signin-user", (req, res) => {
                     expiresIn: '1h', // expiration time
                 })
                 
-                res.cookie('token', token, { httpOnly: true})
+                res.cookie('token', token, { 
+                    httpOnly: true,
+                })
                 res.redirect('/read-all')
             }
         }
