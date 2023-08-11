@@ -50,18 +50,19 @@ router.post("/signin-user", (req, res) => {
         else{
             if(password !== foundUser.password){
                 const response = {
-                    "msg" : "Password did not match!"
+                    "msg" : "Wrong Password!"
                 }
                 // res.redirect('/signin')
                 res.json(response)
             }
             else{
                 // Generating JWT token
-                const token = jwt.sign({ id: foundUser._id, useremail: foundUser.email}, process.env.JWT_SECRET, {
+                const token = jwt.sign({ id: foundUser._id, useremail: foundUser.email, username: foundUser.name}, process.env.JWT_SECRET, {
                     expiresIn: '1h', // expiration time
                 })
                 
-                res.status(201).json({token})
+                res.cookie('token', token, { httpOnly: true})
+                res.redirect('/read-all')
             }
         }
         if(err){

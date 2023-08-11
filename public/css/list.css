@@ -1,3 +1,7 @@
+* {
+  margin: 0px;
+}
+
 h1 {
   color: #fff;
   padding: 10px;
@@ -49,7 +53,7 @@ form.item {
   margin-left: 20px;
 }
 
-button {
+form button {
   min-height: 50px;
   width: 50px;
   border-radius: 50%;

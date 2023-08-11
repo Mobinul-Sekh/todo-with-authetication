@@ -1,18 +1,28 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>To Do List</title>
-        <link rel="stylesheet" type="text/css" href="/css/header.css">
-        <link rel="stylesheet" type="text/css" href="/css/footer.css">
-        
-        <% if (page === 'auth') { %> 
-            <link rel="stylesheet" href="/css/authentication.css"> 
-        <% } %>
-        
-        <% if (page === 'todo') { %> 
-            <link rel="stylesheet" type="text/css" href="/css/styles.css"> 
-        <% } %>
-    </head>
-    <body>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To Do List</title>
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+
+    <% if (page==='auth' ) { %>
+        <link rel="stylesheet" href="/css/authentication.css">
+    <% } %>
+
+    <% if (page==='todo' ) { %>
+        <link rel="stylesheet" type="text/css" href="/css/list.css">
+    <% } %>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="#" style="padding-top: 5vh;">Ta-Da</a>
+        <% if (page==='todo' ){ %>
+            <button class="btn" type="Logout">Logout</button>
+        <%  } %>
+    </nav>
+   
+</body>

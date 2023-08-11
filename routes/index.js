@@ -6,6 +6,7 @@ const _ = require("lodash");
 const authenticateToken = require('../middlewares/jwt-middleware')
 
 router.get("/read-all", authenticateToken, function (req, res) {
+    console.log(req.user);
     
     Item.find({}, function (err, foundItems) {
         if (foundItems.length === 0) {
@@ -17,13 +18,12 @@ router.get("/read-all", authenticateToken, function (req, res) {
                     console.log("default items successfully inserted!");
                 }
             });
-            // res.redirect("/read-all");
+            res.redirect("/read-all");
         }
         else {
             res.render("list", { listTitle: "Today", newItems: foundItems});
         }
     });
-    // res.json({ message: 'This is a protected route', user: req.user });
 });
 
 router.post("/add-todo", function (req, res) {

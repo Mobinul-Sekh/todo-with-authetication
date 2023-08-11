@@ -4,3 +4,36 @@ html {
     min-height: 1000px;
     font-family: 'helvetica neue';
 }
+
+nav {
+    display: flex;
+    height: 4em;
+    background: rgb(63,94,251);
+    background: -moz-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(205,91,227,1) 100%);
+    background: -webkit-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(205,91,227,1) 100%);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(205,91,227,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endColorstr="#cd5be3",GradientType=1);
+    }
+  
+nav a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: white;
+    margin-top: -16px;
+    margin-left: 16px;
+}
+
+nav button {
+    text-align: center;
+    width: 5.5rem;
+    height: 3rem;
+    color: white;
+    font-size: 1rem;
+    background-color: palevioletred;
+    box-shadow: 3px 3px 10px -3px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border-style: none;
+    margin-left: 87%;
+    margin-top: 1vh;
+}

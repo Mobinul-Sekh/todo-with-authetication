@@ -1,16 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 const todoRouter = require('./routes/index')
-const authRouter = require('./routes/auth')
+const authRouter = require('./routes/auth');
 
 const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.use(express.json())
+app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect(process.env.DB_STRING, { useNewUrlParser: true })
 
