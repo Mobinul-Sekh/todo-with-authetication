@@ -21,8 +21,9 @@
     <nav class="navbar">
         <a href="#" style="padding-top: 5vh;">Ta-Da</a>
         <% if (page==='todo' ){ %>
-            <button class="btn" type="Logout">Logout</button>
+            <form action="/signout" method="get">
+                <button class="btn" type="submit">Logout</button>
+            </form>
         <%  } %>
     </nav>
-   
 </body>

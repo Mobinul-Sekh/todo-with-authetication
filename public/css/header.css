@@ -24,7 +24,11 @@ nav a {
     margin-left: 16px;
 }
 
-nav button {
+nav form {
+    padding-left: 87%;
+}
+
+.btn {
     text-align: center;
     width: 5.5rem;
     height: 3rem;
@@ -34,6 +38,10 @@ nav button {
     box-shadow: 3px 3px 10px -3px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     border-style: none;
-    margin-left: 87%;
     margin-top: 1vh;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #db648c;
 }

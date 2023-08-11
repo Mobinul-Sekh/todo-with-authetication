@@ -11,6 +11,14 @@ router.get("/signup", (req, res) => {
     res.render('signup');
 })
 
+router.get("/signout", (req, res) => {
+    res.cookie('token', null, {
+        httpOnly: true,
+        expires: new Date(Date.now())
+    })
+    res.redirect('/signin')
+})
+
 router.post("/create-user", (req, res) => {
 
     const { name, email, password } = req.body;
@@ -27,10 +35,7 @@ router.post("/create-user", (req, res) => {
             res.redirect('/signin')
         }
         else{
-            const response = {
-                "msg" : "User Already Exists please Sign in!"
-            }
-            res.json(response)
+            res.render("error", { errorMsg: "User Already Exists please Sign in!", errorCode: 409, redirectPage: '/signin'});
         }
     })
 })
@@ -41,19 +46,11 @@ router.post("/signin-user", (req, res) => {
 
     User.findOne({email: email}, (err, foundUser) => {
         if(!foundUser){
-            const response = {
-                "msg" : "No user registered with this credential, Sign up first!"
-            }
-            // res.redirect('/signup')
-            res.json(response)
+            res.render("error", { errorMsg: "No user registered with this credential, Sign up first!", errorCode: 401, redirectPage: '/signup'});
         }
         else{
             if(password !== foundUser.password){
-                const response = {
-                    "msg" : "Wrong Password!"
-                }
-                // res.redirect('/signin')
-                res.json(response)
+                res.render("error", { errorMsg: "Wrong Password!", errorCode: 401, redirectPage: '/signin'});
             }
             else{
                 // Generating JWT token
@@ -66,7 +63,7 @@ router.post("/signin-user", (req, res) => {
             }
         }
         if(err){
-            console.log("Sign-in err --> ");
+            res.render("error", { errorMsg: "Something Went Wrong!", errorCode: 500, redirectPage: '/signin'});
         }
     })
 })

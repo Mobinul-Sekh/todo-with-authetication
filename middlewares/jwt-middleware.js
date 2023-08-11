@@ -6,22 +6,21 @@ function authenticateToken(req, res, next) {
         const token = req.cookies.token;
     
         if(!token) {
-            return res.status(401).json({msg: "Unauthorized"});
+            res.render("error", { errorMsg: "Unauthorized", errorCode: 401, redirectPage: '#'});
         }
         
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if(err) {
-                return res.status(403).json({msg: "Invalid Token"});
+                res.render("error", { errorMsg: "Invalid Token", errorCode: 401, redirectPage: '#'});
             }
     
             req.user = user;
-            console.log(user);
             next();
         })
     }
     catch(err) {
         console.log("Error from jwtMiddleware catch block!");
-        res.status(401).json({msg: "Unauthorized"})
+        res.render("error", { errorMsg: "Unauthorized", errorCode: 401, redirectPage: '#'});
     }
 }
 

@@ -6,7 +6,6 @@ const _ = require("lodash");
 const authenticateToken = require('../middlewares/jwt-middleware')
 
 router.get("/read-all", authenticateToken, function (req, res) {
-    console.log(req.user);
     
     Item.find({}, function (err, foundItems) {
         if (foundItems.length === 0) {
