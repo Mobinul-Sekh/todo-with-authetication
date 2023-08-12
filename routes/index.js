@@ -7,23 +7,29 @@ const authenticateToken = require('../middlewares/jwt-middleware')
 
 router.get("/read-all", authenticateToken, function (req, res) {
     
-    Item.find({ user: req.user.id }, function (err, foundItems) {
+    console.log(req.user);
+    Item.find({ user: req.user.id }, async function (err, foundItems) {
         if (err) {
             console.log("Error while get todos for the user -> ", err);
         }
         else {
             if (foundItems.length === 0) {
-                defaultItems.forEach(async element => {
-                    const newItem = new Item({
+                const insertItems = async () => {
+                    for (const element of defaultItems) {
+                      const newItem = new Item({
                         name: element,
                         user: req.user.id
-                    });
-                    await newItem.save()
-                });
-                res.redirect("/read-all");
+                      });
+                      await newItem.save();
+                    }
+                  };
+                
+                  insertItems().then(() => {
+                    res.redirect("/read-all");
+                  });
             }
             else {
-                res.render("list", { listTitle: "Today", newItems: foundItems});
+                res.render("list", { listTitle: "Today", newItems: foundItems, userEmail: req.user.useremail });
             }
         }
     });
@@ -104,7 +110,7 @@ router.get("/new/:customListTitle", authenticateToken, function (req, res) {
 
                 // Show an existing list
 
-                res.render("list", { listTitle: foundList.name, newItems: foundList.items });
+                res.render("list", { listTitle: foundList.name, newItems: foundList.items , userEmail: req.user.useremail });
             }
         }
     });

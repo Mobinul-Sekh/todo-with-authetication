@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
 const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt")
 
 router.get("/signin", (req, res) => {
     res.render('signin');
@@ -23,16 +24,21 @@ router.post("/create-user", (req, res) => {
 
     const { name, email, password, confirmPassword } = req.body;
 
-    if ( password !== confirmPassword ) {
+    if ( password.length < 6 ) {
+        res.render("error", { errorMsg: "Password length must be 6 characters.", errorCode: 409, redirectPage: '/signup'});
+    }
+    else if ( password !== confirmPassword ) {
         res.render("error", { errorMsg: "Password and Confirm Password do not match!", errorCode: 409, redirectPage: '/signup'});
     }
     else {
-        User.findOne({email: email}, (err, foundUser) => {
+        User.findOne({email: email}, async (err, foundUser) => {
             if(!foundUser){
+
+                const hashPassword = await bcrypt.hash(password, 10);
                 const newUser = new User({
                     name: name,
                     email: email,
-                    password: password
+                    password: hashPassword
                 })
     
                 newUser.save()
@@ -49,12 +55,14 @@ router.post("/signin-user", (req, res) => {
 
     const { email, password } = req.body;
 
-    User.findOne({email: email}, (err, foundUser) => {
+    User.findOne({email: email}, async (err, foundUser) => {
         if(!foundUser){
             res.render("error", { errorMsg: "No user registered with this credential, Sign up first!", errorCode: 401, redirectPage: '/signup'});
         }
         else{
-            if(password !== foundUser.password){
+            const validPassword = await bcrypt.compare(password, foundUser.password);
+            
+            if (!validPassword) {
                 res.render("error", { errorMsg: "Wrong Password!", errorCode: 401, redirectPage: '/signin'});
             }
             else{

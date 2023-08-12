@@ -22,6 +22,9 @@
         <a href="#" style="padding-top: 5vh;">Ta-Da</a>
         <% if (page==='todo' ){ %>
             <form action="/signout" method="get">
+                <div>
+                    <p><%- userEmail %></p>
+                </div>
                 <button class="btn" type="submit">Logout</button>
             </form>
         <%  } %>

@@ -11,18 +11,13 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     createdAt: {
         type: Date,
         default: Date.now
     }
 });
-
-// userSchema.pre('save', (next) => {
-//     console.log('performing actions before save...');
-//     next();
-// })
 
 const User = mongoose.model('User', userSchema)
 

@@ -25,11 +25,12 @@ nav a {
 }
 
 nav form {
-    padding-left: 87%;
+    display: flex;
+    padding-left: 73%;
 }
 
 .btn {
-    text-align: center;
+        text-align: center;
     width: 5.5rem;
     height: 3rem;
     color: white;
