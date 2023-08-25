@@ -4,6 +4,10 @@ const User = require('../models/user')
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
+router.get("/", (req, res) => {
+    res.redirect('/signin');
+})
+
 router.get("/signin", (req, res) => {
     res.render('signin');
 })
