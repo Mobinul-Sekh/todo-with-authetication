@@ -7,13 +7,15 @@ html {
 
 nav {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     height: 4em;
     background: rgb(63,94,251);
     background: -moz-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(205,91,227,1) 100%);
     background: -webkit-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(205,91,227,1) 100%);
     background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(205,91,227,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endColorstr="#cd5be3",GradientType=1);
-    }
+}
   
 nav a {
     text-decoration: none;
@@ -26,7 +28,7 @@ nav a {
 
 nav form {
     display: flex;
-    padding-left: 73%;
+    margin-right: 2vw;
 }
 
 .btn {
@@ -39,7 +41,7 @@ nav form {
     box-shadow: 3px 3px 10px -3px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     border-style: none;
-    margin-top: 1vh;
+    margin-top: 5px;
     cursor: pointer;
 }
 
